@@ -1,1 +1,1 @@
-web: gunicorn deploydjango.wsgi --log-file -
+web: gunicorn jobexp.wsgi --log-file -
