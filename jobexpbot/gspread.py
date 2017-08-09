@@ -2,6 +2,7 @@
 def GetJobDesc():
     import gspread
     from oauth2client.service_account import ServiceAccountCredentials
+    from django.conf import settings as djangoSettings
 
     fileroute = '.' + djangoSettings.STATIC_URL
     #fileroute = 'D:\google service account key' + '\\'
