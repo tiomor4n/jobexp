@@ -114,18 +114,24 @@ def callback(request):
                         LineMsgOut(mid = mid,message = 'input job id')
                     
                     elif event.message.text == u'確定輸入':
-                        WriteToStaticBOT(body,"ask")
-                        purporse,step,last_ask,last_reply,timestamp = CheckStep(mid)
-                        print ('last_reply:' + last_reply)
-                        if last_reply == 'input confirm':
-                            print ('開始寫入流程')
-                            utility.WriteCustProfile(mid)
-                            if CheckDialog(mid):
-                                RemoveDialog(mid)
+                        if CheckDialog(mid):
+                            WriteToStaticBOT(body,"ask")
+                            purporse,step,last_ask,last_reply,timestamp = CheckStep(mid)
+                            print ('last_reply:' + last_reply)
+                            if last_reply == 'input confirm':
+                                print ('開始寫入流程')
+                                utility.WriteCustProfile(mid)
+                                if CheckDialog(mid):
+                                    RemoveDialog(mid)
+                                line_bot_api.reply_message(
+                                    event.reply_token,
+                                    TextSendMessage(text=u'輸入完成，感謝您提供資訊，我們會在第一時間通知您，也別忘了常回來逛逛喔'),
+                                )
+                        else:
                             line_bot_api.reply_message(
-                                event.reply_token,
-                                TextSendMessage(text=u'輸入完成，感謝您提供資訊，我們會在第一時間通知您，也別忘了常回來逛逛喔'),
-                            )
+                                     event.reply_token,
+                                     TextSendMessage(text=u'我無法辨識您的輸入，可能您閒置太久，建議您從下方選單重新開始輸入'),
+                                )
                             
                     else:
                         if CheckDialog(mid):
