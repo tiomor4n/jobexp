@@ -37,7 +37,7 @@ def WriteCustData(Jobid,CustName,CustTel,CustGender):
     from oauth2client.service_account import ServiceAccountCredentials
     scope = ['https://spreadsheets.google.com/feeds']
     
-    credentials = ServiceAccountCredentials.from_json_keyfile_name('D:\google service account key\\auth.json', scope)
+    credentials = ServiceAccountCredentials.from_json_keyfile_name(fileroute + 'auth.json', scope)
     gc = gspread.authorize(credentials)
     sht1 = gc.open_by_key('1bCAYb2AlqEMcDezraXYU3QepIvKXh9EOJxkfOfs2Yps')
     sht12 = sht1.get_worksheet(1)
