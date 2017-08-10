@@ -35,6 +35,7 @@ def GetJobDesc():
 def WriteCustData(Jobid,CustName,CustTel,CustGender):
     import gspread
     from oauth2client.service_account import ServiceAccountCredentials
+    from django.conf import settings as djangoSettings
     scope = ['https://spreadsheets.google.com/feeds']
     
     credentials = ServiceAccountCredentials.from_json_keyfile_name(fileroute + 'auth.json', scope)
