@@ -37,6 +37,7 @@ def WriteCustData(Jobid,CustName,CustTel,CustGender):
     from oauth2client.service_account import ServiceAccountCredentials
     from django.conf import settings as djangoSettings
     scope = ['https://spreadsheets.google.com/feeds']
+    fileroute = '.' + djangoSettings.STATIC_URL
     
     credentials = ServiceAccountCredentials.from_json_keyfile_name(fileroute + 'auth.json', scope)
     gc = gspread.authorize(credentials)
