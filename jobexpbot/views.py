@@ -6,11 +6,17 @@ from linebot.models import *
 from django.views.decorators.csrf import csrf_exempt
 from .gspread import GetJobDesc
 from .utility import ReadFromStaticBOT,WriteToStaticBOT,CheckStep,CheckDialog,RemoveDialog
+from .models import oper_para
 
 
 
-line_bot_api = LineBotApi('eF+vitzOYURLTV5WIkkEYItPiRAw0PUmkaOF7VTVNjRCc8d6V/OL9QNfcYwkp0KwC8DHtc7Fi5sSOrQAuwNnJiDn7SzmbJfuFEVAGm89RzXtdxejjfFple3vMWHR8X4u/MnceYRiwfj36bbZhOxfagdB04t89/1O/w1cDnyilFU=')
-parser = WebhookParser('a0465984a20438a1395b64f77b33fb27')
+strapi1 = oper_para.objects.get(name='strapi1').content
+strapi2 = oper_para.objects.get(name='strapi2').content
+
+strapi = strapi1 + strapi2
+line_bot_api = LineBotApi(strapi)
+
+parser = WebhookParser(oper_para.objects.get(name='webhookparser').content)
 
 
 @csrf_exempt
@@ -37,7 +43,7 @@ def callback(request):
         REPLY_ENDPOINT = 'https://api.line.me/v2/bot/message/reply'
         header = {
             "Content-Type": "application/json",
-            "Authorization": "Bearer eF+vitzOYURLTV5WIkkEYItPiRAw0PUmkaOF7VTVNjRCc8d6V/OL9QNfcYwkp0KwC8DHtc7Fi5sSOrQAuwNnJiDn7SzmbJfuFEVAGm89RzXtdxejjfFple3vMWHR8X4u/MnceYRiwfj36bbZhOxfagdB04t89/1O/w1cDnyilFU="
+            "Authorization": "Bearer " + strapi
         }
         payload = {
               "replyToken":reply_token,

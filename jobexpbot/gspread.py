@@ -1,16 +1,23 @@
 #https://github.com/burnash/gspread
-def GetJobDesc():
+def GetGsht():
     import gspread
     from oauth2client.service_account import ServiceAccountCredentials
     from django.conf import settings as djangoSettings
+    from .models import oper_para
 
-    fileroute = '.' + djangoSettings.STATIC_URL
+    fileroute = djangoSettings.STATIC_ROOT  + '\\'
     #fileroute = 'D:\google service account key' + '\\'
     scope = ['https://spreadsheets.google.com/feeds']
     
     credentials = ServiceAccountCredentials.from_json_keyfile_name(fileroute + 'auth.json', scope)
     gc = gspread.authorize(credentials)
-    sht1 = gc.open_by_key('1bCAYb2AlqEMcDezraXYU3QepIvKXh9EOJxkfOfs2Yps')
+    sht1 = gc.open_by_key(oper_para.objects.get(name='shtkey').content)
+    
+
+    return sht1
+
+def GetJobDesc():
+    sht1 = GetGsht()
     sht11 = sht1.get_worksheet(0)
     acnt = len(sht11.col_values(1))-1000
     #sht11.insert_row(['2017/8/6','W','K','W','D','1'],acnt + 1)
@@ -33,16 +40,10 @@ def GetJobDesc():
     return strdesc
 
 def WriteCustData(Jobid,CustName,CustTel,CustGender):
-    import gspread
-    from oauth2client.service_account import ServiceAccountCredentials
-    from django.conf import settings as djangoSettings
-    scope = ['https://spreadsheets.google.com/feeds']
-    fileroute = '.' + djangoSettings.STATIC_URL
-    
-    credentials = ServiceAccountCredentials.from_json_keyfile_name(fileroute + 'auth.json', scope)
-    gc = gspread.authorize(credentials)
-    sht1 = gc.open_by_key('1bCAYb2AlqEMcDezraXYU3QepIvKXh9EOJxkfOfs2Yps')
+    from datetime import datetime as dt
+    nowstr = dt.now().strftime('%Y/%m/%d %H:%M:%S')
+    sht1 = GetGsht()
     sht12 = sht1.get_worksheet(1)
     #acnt = len(sht12.col_values(1))-1000
-    sht12.append_row(['2017/8/8',Jobid,CustName,CustTel,CustGender])
+    sht12.append_row([nowstr,Jobid,CustName,CustTel,CustGender])
     return 'ok'
