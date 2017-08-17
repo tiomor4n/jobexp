@@ -10,13 +10,6 @@ from .models import oper_para
 
 
 
-strapi1 = oper_para.objects.get(name='strapi1').content
-strapi2 = oper_para.objects.get(name='strapi2').content
-
-strapi = strapi1 + strapi2
-line_bot_api = LineBotApi(strapi)
-
-parser = WebhookParser(oper_para.objects.get(name='webhookparser').content)
 
 
 @csrf_exempt
@@ -24,6 +17,19 @@ def callback(request):
     import sys
     from jobexpbot import utility
     sys.setdefaultencoding='utf8'
+    def getpara():
+        strapi1 = oper_para.objects.get(name='strapi1').content
+        strapi2 = oper_para.objects.get(name='strapi2').content
+
+        strapi = strapi1 + strapi2
+        strparser = oper_para.objects.get(name='webhookparser').content
+        #line_bot_api = LineBotApi(strapi)
+
+        #parser = WebhookParser(oper_para.objects.get(name='webhookparser').content)
+
+        return strapi,strparser
+
+
     def LineMsgOut(mid,message):
         sendmsgstr = '{"events":[{"source":{"userId":"' + mid + '"},"message":{"text":"'+ message + '"}}]}'
         #print sendmsgstr
@@ -55,6 +61,12 @@ def callback(request):
                 ]
         }
         requests.post(REPLY_ENDPOINT, headers=header, data=json.dumps(payload))
+
+    
+    strapi, strparser = getpara()
+
+    line_bot_api = LineBotApi(strapi)
+    parser = WebhookParser(strparser)    
 
 
     if request.method == 'POST':
