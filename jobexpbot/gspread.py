@@ -5,7 +5,7 @@ def GetGsht():
     from django.conf import settings as djangoSettings
     from .models import oper_para
 
-    fileroute = djangoSettings.STATIC_ROOT  + '\\'
+    fileroute = djangoSettings.STATIC_ROOT  + '/'
     #fileroute = 'D:\google service account key' + '\\'
     scope = ['https://spreadsheets.google.com/feeds']
     
