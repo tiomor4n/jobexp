@@ -19,8 +19,13 @@ def GetGsht():
 def GetJobDesc():
     sht1 = GetGsht()
     sht11 = sht1.get_worksheet(0)
-    acnt = len(sht11.col_values(1))-1000
-    #sht11.insert_row(['2017/8/6','W','K','W','D','1'],acnt + 1)
+    acnt=0
+    for x in sht11.col_values(1):
+        if x!= '':
+            acnt = acnt +1
+        else:
+            break
+    
     
     strdesc = ''
     jobid = ''
