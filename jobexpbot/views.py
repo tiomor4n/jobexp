@@ -143,7 +143,11 @@ def callback(request):
                                     RemoveDialog(mid)
                                 line_bot_api.reply_message(
                                     event.reply_token,
-                                    TextSendMessage(text=u'輸入完成，感謝您提供資訊，我們會在第一時間通知您，也別忘了常回來逛逛喔'),
+                                    
+                                      [TextSendMessage(text=u'輸入完成，感謝您提供資訊。'),
+                                     TextSendMessage(text=u'我們會在第一時間通知您，也別忘了常回來逛逛喔'),
+                                     StickerSendMessage(package_id='1',sticker_id='2')
+                                    ]
                                 )
                         else:
                             line_bot_api.reply_message(
