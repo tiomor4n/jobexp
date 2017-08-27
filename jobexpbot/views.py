@@ -110,12 +110,12 @@ def callback(request):
                     elif event.message.text == u'使用說明':
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text=u'請放本bot之使用說明'),
+                            TextSendMessage(text=u'請點選下方的功能選單開始使用'),
                         )
                     elif event.message.text == u'關於我們':
                         line_bot_api.reply_message(
                             event.reply_token,
-                            TextSendMessage(text=u'請放自我介紹'),
+                            TextSendMessage(text=u'我們是北台灣最大的就業服務業者，針對您的需求提供最完善且專業的建議，目前已有約2萬名求職者透過我們找到工作，我們將竭盡所能提您服務！'),
                         )
                         
                     elif event.message.text == u'我要應徵':
