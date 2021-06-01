@@ -19,7 +19,7 @@ requests==2.18.3
 rsa==3.4.2
 six==1.10.0
 uritemplate==3.0.0
-urllib3==1.22
+urllib3==1.26.5
 gunicorn==19.7.1
 dj-database-url==0.4.2
 dj-static==0.0.6
